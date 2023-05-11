@@ -1,60 +1,57 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
 
-part 'auth_response.g.dart';
+AuthResponse authFromJson(String str) => AuthResponse.fromJson(json.decode(str));
 
-@JsonSerializable()
-class AuthResponse extends Equatable {
-  final String message;
-  final Data data;
+String authToJson(AuthResponse data) => json.encode(data.toJson());
 
-  const AuthResponse({
-    required this.message,
-    required this.data,
+class AuthResponse {
+  final String? avatar;
+  final String? name;
+  final String? phone;
+  final String? email;
+  final String? password;
+  final String? role;
+  final String? notificationToken;
+  final String? state;
+  final String? accessToken;
+  final String? message;
+
+  AuthResponse({
+    this.avatar,
+    this.name,
+    this.phone,
+    this.email,
+    this.password,
+    this.role,
+    this.notificationToken,
+    this.state,
+    this.accessToken,
+    this.message,
   });
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) =>
-      _$AuthResponseFromJson(json);
+  factory AuthResponse.fromJson(Map<String, dynamic> json) => AuthResponse(
+    message: json["message"],
+    avatar: json["avatar"],
+    name: json["name"],
+    phone: json["phone"],
+    email: json["email"],
+    password: json["password"],
+    role: json["role"],
+    notificationToken: json["notification_token"],
+    state: json["state"],
+    accessToken: json["accessToken"],
+  );
 
-  Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
-
-  @override
-  List<Object?> get props => [message, data];
-}
-
-@JsonSerializable()
-class Data extends Equatable {
-  final User user;
-  final String accessToken;
-
-  const Data({required this.accessToken, required this.user});
-
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DataToJson(this);
-
-  @override
-  List<Object?> get props => [accessToken, user];
-}
-
-@JsonSerializable()
-class User extends Equatable {
-  const User({
-    required this.name,
-    required this.phone,
-    required this.role,
-    required this.notificationToken,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  final String name;
-  final String phone;
-  final String role;
-  final String notificationToken;
-
-  @override
-  List<Object?> get props => [name, phone, role, notificationToken];
+  Map<String, dynamic> toJson() => {
+    "message": message,
+    "avatar": avatar,
+    "name": name,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "role": role,
+    "notification_token": notificationToken,
+    "state": state,
+    "accessToken": accessToken,
+  };
 }

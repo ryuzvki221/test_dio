@@ -39,9 +39,7 @@ class Api {
 
   Future<Response> post(String path, Map<String, dynamic> body) async {
     try {
-      final response = await _dio.post(path, data:     <String, dynamic>{
-        'phone': '777536365',
-      });
+      final response = await _dio.post(path, data: body);
       if (response.statusCode == 201 || response.statusCode == 200) {
         return response;
       } else {

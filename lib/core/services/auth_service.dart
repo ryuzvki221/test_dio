@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:test_dio/core/models/responses/responses.dart';
 import 'package:test_dio/core/network/api.dart';
@@ -7,31 +7,42 @@ import 'package:test_dio/core/network/endpoints.dart';
 class AuthService {
   final _api = Api();
 
-  Future<DefaultResponse> registerCustomer(
-      String lastname, String firstname, String phone, String? ntoken) async {
+  Future<AuthResponse> register(
+      String name, String phone, String email, String password, String? ntoken) async {
+
+    String createFirstname() {
+      Set<String> firstname = {};
+      for (int i = 0; i < name.split(" ").length - 1; i++) {
+        firstname = firstname.union({name.split(" ")[i]});
+      }
+      return firstname.join(" ");
+    }
+    final lastname = name.split(" ").last;
+    final firstname = createFirstname();
     try {
-      final response = await _api.post(Endpoints.registerCustomer, {
+      final response = await _api.post(Endpoints.register, {
         "lastname": lastname,
         "firstname": firstname,
+        "email": email,
+        "password": password,
         "phone": phone,
-        if (ntoken != null) "notification_token": ntoken
+        "notification_token": ntoken
       });
-      return DefaultResponse.fromJson(response.data);
+      return AuthResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<DefaultResponse> login(String phone) async {
-
-
+  Future<AuthResponse> login(String identifier, String password) async {
     Map<String, dynamic> data = {
-      "phone": phone,
+      "identifier": identifier,
+      "password": password,
     };
 
     try {
       final response = await _api.post(Endpoints.login, data);
-      return DefaultResponse.fromJson(jsonDecode(response.data));
+      return AuthResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

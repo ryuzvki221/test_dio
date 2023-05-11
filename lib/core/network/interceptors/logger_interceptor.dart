@@ -18,7 +18,7 @@ class LoggerInterceptor extends Interceptor {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
     logger.e('${options.method} request => $requestPath');
-    logger.d('Error: ${err.response?.data['message'] ?? err.error}, Message: ${err.message}');
+    logger.d('Error: ${err.error ?? err.type.name}, Message: ${err.response?.data['message'] ?? err.message}');
     return super.onError(err, handler);
   }
 

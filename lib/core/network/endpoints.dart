@@ -1,7 +1,7 @@
 class Endpoints {
   Endpoints._();
 
-  static const String baseURL = 'http://10.0.3.2:7000';
+  static const String baseURL = 'http://10.0.3.2:3000';
   static const String baseAuth= '/auth';
   static const String baseAPI= '/api/v1';
 
@@ -10,8 +10,7 @@ class Endpoints {
   ///Auth
   static const String renewToken = '$baseAuth/renew';
   static const String login = '$baseAuth/login';
-  static const String registerCustomer = '/auth/register/customer';
-  static const String registerDeliveryMan = '$baseAuth/register/deliveryman';
+  static const String register= '$baseAuth/register';
   static const String verifyUser = '$baseAuth/verify';
   ///Users
   static const String users = '$baseAPI/users';
@@ -20,4 +19,5 @@ class Endpoints {
 
   ///TEST
   static const String testURL = 'https://jsonplaceholder.typicode.com';
-  static const String test = '/posts';}
+  static const String test = '/posts';
+}

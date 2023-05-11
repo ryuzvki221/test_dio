@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:test_dio/core/network/api.dart';
 import 'package:test_dio/core/services/services.dart';
@@ -55,34 +53,39 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   onPressed: () async {
                     final response = await homeService.fetch();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(response.data.toString()),
-                        ),
-                      );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(response.data.toString()),
+                      ),
+                    );
                   },
                   child: const Text('GET'),
                 ),
                 ElevatedButton(
-                  onPressed: ()  async {
-                    final response = await authService.login("777536365");
+                  onPressed: () async {
+                    final response = await authService.login("admin@yonima.com", "IsMyPassword@123!");
+                    print(response.toJson().toString());
+                    // final response = await authService.verifyUser("777536365", "1234");
+                    // final response = await authService.register(
+                    //     "sen fournisseur online",
+                    //     "777536365",
+                    //     "senfournisseur@passer.com",
+                    //     "IsMyPassword@123",
+                    //     null);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                         content: Text(response.toString()),
+                        content: Text(response.toJson().toString()),
                       ),
                     );
                   },
                   child: const Text('POST'),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-
-                  },
+                  onPressed: () async {},
                   child: const Text('PUT'),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                  },
+                  onPressed: () async {},
                   child: const Text('DELETE'),
                 ),
               ],
